@@ -12,9 +12,12 @@ public class GameFrame extends JFrame {
     /** Creates and shows the game window. */
     public GameFrame() {
         setTitle(Constants.GAME_TITLE);
-        setSize(Constants.WIDTH, Constants.HEIGHT);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
+
+        add(new GamePanel());
+        pack(); // makes the window exactly fit the panel's preferred size
+
         setLocationRelativeTo(null); // null = center on the screen
         setVisible(true);
     }

@@ -15,6 +15,15 @@ public final class Constants {
     /** Height of the game area in pixels. */
     public static final int HEIGHT = 540;
 
+    /** How many times per second the game updates and redraws. */
+    public static final int FPS = 60;
+
+    /** Milliseconds between two frames (1000 ms / 60 frames = about 16 ms). */
+    public static final int FRAME_DELAY = 1000 / FPS;
+
+    /** Y position of the rooftop surface (the hero runs on this line). */
+    public static final int GROUND_Y = 440;
+
     /** Private constructor: this class only holds constants, so no objects are made. */
     private Constants() {
     }
