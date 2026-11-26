@@ -1,0 +1,12 @@
+# Compiled output
+out/
+bin/
+*.class
+
+# Saved game data
+highscore.txt
+
+# IDE files
+.idea/
+*.iml
+.vscode/
