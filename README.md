@@ -36,4 +36,5 @@ src/webrunner/
 
 ## Team
 
-- (add team member names here)
+- Sadia Zohora Faiza
+- Sadia Alamgir Ashra
