@@ -88,6 +88,15 @@ public class Player extends GameObject {
         }
     }
 
+    public void checkObstacles(List<? extends GameObject> obstacles) {
+        for (GameObject obstacle : obstacles) {
+            if (getBounds().intersects(obstacle.getBounds())) {
+                crashed = true;
+                return;
+            }
+        }
+    }
+
     public boolean isCrashed() {
         return crashed;
     }

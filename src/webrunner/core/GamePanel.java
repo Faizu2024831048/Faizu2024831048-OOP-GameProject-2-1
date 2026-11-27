@@ -15,8 +15,14 @@ import javax.swing.Timer;
 
 import webrunner.entity.Building;
 import webrunner.entity.Player;
+import webrunner.obstacle.Antenna;
+import webrunner.obstacle.Drone;
+import webrunner.obstacle.FlowerTub;
+import webrunner.obstacle.Obstacle;
 
 public class GamePanel extends JPanel implements ActionListener {
+
+    private static final int OBSTACLE_CHANCE = 65;
 
     private static final int[][] STARS = {
         {60, 40}, {150, 110}, {230, 60}, {320, 150}, {410, 30},
@@ -26,6 +32,7 @@ public class GamePanel extends JPanel implements ActionListener {
     };
 
     private final ArrayList<Building> buildings = new ArrayList<>();
+    private final ArrayList<Obstacle> obstacles = new ArrayList<>();
     private final Random random = new Random();
     private final Player player = new Player();
 
@@ -42,8 +49,10 @@ public class GamePanel extends JPanel implements ActionListener {
 
     private void startGame() {
         buildings.clear();
+        obstacles.clear();
         Building first = new Building(0, 700, 150);
         buildings.add(first);
+        obstacles.add(new FlowerTub(420, first.getY()));
         player.reset(first.getY());
     }
 
@@ -57,11 +66,16 @@ public class GamePanel extends JPanel implements ActionListener {
         for (Building b : buildings) {
             b.update();
         }
+        for (Obstacle obstacle : obstacles) {
+            obstacle.update();
+        }
         buildings.removeIf(b -> b.isOffScreen());
+        obstacles.removeIf(obstacle -> obstacle.isOffScreen());
         addBuildingIfNeeded();
 
         player.update();
         player.checkBuildings(buildings);
+        player.checkObstacles(obstacles);
         if (player.isCrashed()) {
             startGame();
         }
@@ -90,7 +104,28 @@ public class GamePanel extends JPanel implements ActionListener {
         }
         int width = randomBetween(Constants.MIN_BUILDING_WIDTH, Constants.MAX_BUILDING_WIDTH);
 
-        buildings.add(new Building(last.getRight() + gap, width, height));
+        Building next = new Building(last.getRight() + gap, width, height);
+        buildings.add(next);
+        addObstacle(next);
+    }
+
+    private void addObstacle(Building building) {
+        if (building.getWidth() < 360 || random.nextInt(100) >= OBSTACLE_CHANCE) {
+            return;
+        }
+
+        int x = building.getX() + randomBetween(160, building.getWidth() - 100);
+        switch (random.nextInt(3)) {
+            case 0:
+                obstacles.add(new FlowerTub(x, building.getY()));
+                break;
+            case 1:
+                obstacles.add(new Antenna(x, building.getY()));
+                break;
+            default:
+                obstacles.add(new Drone(x, building.getY()));
+                break;
+        }
     }
 
     private int randomBetween(int min, int max) {
@@ -113,6 +148,9 @@ public class GamePanel extends JPanel implements ActionListener {
 
         for (Building b : buildings) {
             b.draw(g2);
+        }
+        for (Obstacle obstacle : obstacles) {
+            obstacle.draw(g2);
         }
         player.draw(g2);
     }
