@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -15,9 +16,6 @@ import javax.swing.Timer;
 import webrunner.entity.Building;
 import webrunner.entity.Player;
 
-/**
- * The game screen. Holds the game loop: every tick it updates, then repaints.
- */
 public class GamePanel extends JPanel implements ActionListener {
 
     private static final int[][] STARS = {
@@ -44,12 +42,11 @@ public class GamePanel extends JPanel implements ActionListener {
 
     private void startGame() {
         buildings.clear();
-        Building first = new Building(0, 500, 150);
+        Building first = new Building(0, 700, 150);
         buildings.add(first);
         player.reset(first.getY());
     }
 
-    /** Game loop: runs about 60 times per second. */
     @Override
     public void actionPerformed(ActionEvent e) {
         update();
@@ -70,19 +67,28 @@ public class GamePanel extends JPanel implements ActionListener {
         }
     }
 
-    /** When the last building's right edge comes on screen, add a new one after it. */
     private void addBuildingIfNeeded() {
         Building last = buildings.get(buildings.size() - 1);
         if (last.getRight() > Constants.WIDTH) {
             return;
         }
 
+        int lastHeight = last.getHeight();
+        boolean makeGap = random.nextInt(100) < Constants.GAP_CHANCE;
+        if (lastHeight - Constants.MIN_STEP_DOWN < Constants.MIN_BUILDING_HEIGHT) {
+            makeGap = true;
+        }
+
         int gap = 0;
-        if (random.nextInt(100) < Constants.GAP_CHANCE) {
+        int height;
+        if (makeGap) {
             gap = randomBetween(Constants.MIN_GAP, Constants.MAX_GAP);
+            int tallest = Math.min(Constants.MAX_BUILDING_HEIGHT, lastHeight + Constants.MAX_STEP_UP);
+            height = randomBetween(Constants.MIN_BUILDING_HEIGHT, tallest);
+        } else {
+            height = randomBetween(Constants.MIN_BUILDING_HEIGHT, lastHeight - Constants.MIN_STEP_DOWN);
         }
         int width = randomBetween(Constants.MIN_BUILDING_WIDTH, Constants.MAX_BUILDING_WIDTH);
-        int height = randomBetween(Constants.MIN_BUILDING_HEIGHT, Constants.MAX_BUILDING_HEIGHT);
 
         buildings.add(new Building(last.getRight() + gap, width, height));
     }
@@ -95,6 +101,7 @@ public class GamePanel extends JPanel implements ActionListener {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
         g2.setColor(Color.WHITE);
         for (int[] star : STARS) {
