@@ -1,0 +1,16 @@
+[33mcommit 451b89d2ff2503642731a9d619e8176c282b3e8c[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mashra[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/ashra[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m
+Merge: f18b2db b91b159
+Author: faizu186 <sadiazohorafaiza@gmail.com>
+Date:   Fri Nov 27 09:22:37 2026 +0600
+
+    Merge pull request #1 from Faizu2024831048/faiza
+    
+    Add Player with run, jump and duck controls
+
+ src/webrunner/core/Constants.java     |   9 [32m++[m[31m-[m
+ src/webrunner/core/GameFrame.java     |   4 [32m+[m[31m-[m
+ src/webrunner/core/GamePanel.java     |  20 [32m+++++[m[31m-[m
+ src/webrunner/core/InputHandler.java  |  32 [32m+++++++++[m
+ src/webrunner/entity/Player.java      | 126 [32m++++++++++++++++++++++++++++++++++[m
+ src/webrunner/entity/PlayerState.java |   7 [32m++[m
+ 6 files changed, 195 insertions(+), 3 deletions(-)

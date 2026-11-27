@@ -11,12 +11,14 @@ public final class Constants {
 
     public static final int MIN_BUILDING_HEIGHT = 120;
     public static final int MAX_BUILDING_HEIGHT = 230;
-    public static final int MIN_BUILDING_WIDTH = 250;
-    public static final int MAX_BUILDING_WIDTH = 450;
+    public static final int MIN_BUILDING_WIDTH = 400;
+    public static final int MAX_BUILDING_WIDTH = 700;
     public static final int MIN_GAP = 100;
     public static final int MAX_GAP = 180;
 
     public static final int GAP_CHANCE = 40;
+    public static final int MIN_STEP_DOWN = 20;
+    public static final int MAX_STEP_UP = 60;
 
     public static final int PLAYER_X = 150;
     public static final int PLAYER_WIDTH = 30;
