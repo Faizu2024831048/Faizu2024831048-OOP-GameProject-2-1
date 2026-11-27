@@ -10,13 +10,20 @@ public final class Constants {
     public static final int SPEED = 4;
 
     public static final int MIN_BUILDING_HEIGHT = 120;
-    public static final int MAX_BUILDING_HEIGHT = 260;
+    public static final int MAX_BUILDING_HEIGHT = 230;
     public static final int MIN_BUILDING_WIDTH = 250;
     public static final int MAX_BUILDING_WIDTH = 450;
     public static final int MIN_GAP = 100;
     public static final int MAX_GAP = 180;
 
     public static final int GAP_CHANCE = 40;
+
+    public static final int PLAYER_X = 150;
+    public static final int PLAYER_WIDTH = 30;
+    public static final int PLAYER_HEIGHT = 50;
+    public static final int PLAYER_DUCK_HEIGHT = 30;
+    public static final double GRAVITY = 0.8;
+    public static final double JUMP_SPEED = 16;
 
     private Constants() {
     }

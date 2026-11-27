@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 import webrunner.entity.Building;
+import webrunner.entity.Player;
 
 /**
  * The game screen. Holds the game loop: every tick it updates, then repaints.
@@ -28,14 +29,24 @@ public class GamePanel extends JPanel implements ActionListener {
 
     private final ArrayList<Building> buildings = new ArrayList<>();
     private final Random random = new Random();
+    private final Player player = new Player();
 
     public GamePanel() {
         setPreferredSize(new Dimension(Constants.WIDTH, Constants.HEIGHT));
         setBackground(new Color(12, 18, 45));
+        setFocusable(true);
+        addKeyListener(new InputHandler(player));
 
-        buildings.add(new Building(0, 500, 150));
+        startGame();
 
         new Timer(Constants.FRAME_DELAY, this).start();
+    }
+
+    private void startGame() {
+        buildings.clear();
+        Building first = new Building(0, 500, 150);
+        buildings.add(first);
+        player.reset(first.getY());
     }
 
     /** Game loop: runs about 60 times per second. */
@@ -51,6 +62,12 @@ public class GamePanel extends JPanel implements ActionListener {
         }
         buildings.removeIf(b -> b.isOffScreen());
         addBuildingIfNeeded();
+
+        player.update();
+        player.checkBuildings(buildings);
+        if (player.isCrashed()) {
+            startGame();
+        }
     }
 
     /** When the last building's right edge comes on screen, add a new one after it. */
@@ -90,5 +107,6 @@ public class GamePanel extends JPanel implements ActionListener {
         for (Building b : buildings) {
             b.draw(g2);
         }
+        player.draw(g2);
     }
 }
