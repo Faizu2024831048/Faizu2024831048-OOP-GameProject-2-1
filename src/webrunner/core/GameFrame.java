@@ -2,11 +2,7 @@ package webrunner.core;
 
 import javax.swing.JFrame;
 
-/**
- * The main window of the game.
- * It extends JFrame (inheritance), so it gets all window features from Swing
- * and only sets them up for Web Runner.
- */
+
 public class GameFrame extends JFrame {
 
     /** Creates and shows the game window. */
@@ -16,9 +12,9 @@ public class GameFrame extends JFrame {
         setResizable(false);
 
         add(new GamePanel());
-        pack(); // makes the window exactly fit the panel's preferred size
+        pack();
 
-        setLocationRelativeTo(null); // null = center on the screen
+        setLocationRelativeTo(null);
         setVisible(true);
     }
 }
